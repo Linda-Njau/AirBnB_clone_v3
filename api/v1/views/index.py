@@ -11,6 +11,7 @@ from models.state import State
 from models.review import Review
 from models.place import User
 
+
 @app_views.route('/status')
 def status():
     return jsonify({'status': 'OK'})
