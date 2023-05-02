@@ -3,7 +3,7 @@
 States view for RESTful API.
 """
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.state import State
 
@@ -44,7 +44,7 @@ def create_state():
     if 'name' not in data:
         abort(400, 'Missing name')
     state = State(**data)
-    storage.save()
+    state.save()
     return make_response(jsonify(state.to_dict()), 201)
 
 
