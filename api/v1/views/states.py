@@ -45,7 +45,7 @@ def create_state():
         abort(400, 'Missing name')
     state = State(**data)
     storage.save()
-    return jsonify(state.to_dict()), 201
+    return make response(jsonify(state.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
@@ -62,4 +62,4 @@ def update_state(state_id):
         if key not in ignore_keys:
             setattr(state, key, value)
     storage.save()
-    return jsonify(state.to_dict()), 200
+    return make_response(jsonify(state.to_dict()), 200)
