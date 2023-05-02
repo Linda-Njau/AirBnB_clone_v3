@@ -39,12 +39,12 @@ def delete_state(state_id):
 def create_state():
     """Creates a State object from json data."""
     data = request.get_json()
-    if data is None:
+    if not data:
         abort(400, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
     state = State(**data)
-    state.save()
+    storage.save()
     return jsonify(state.to_dict()), 201
 
 
@@ -52,14 +52,14 @@ def create_state():
 def update_state(state_id):
     """Updates a State object based on id."""
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404)
     data = request.get_json()
-    if data is None:
+    if not data:
         abort(400, 'Not a JSON')
     ignore_keys = ['id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in ignore_keys:
             setattr(state, key, value)
-    state.save()
+    storage.save()
     return jsonify(state.to_dict()), 200
